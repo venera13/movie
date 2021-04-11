@@ -1,6 +1,9 @@
 package main
 
 import (
+	"cinema/pkg/cinema/infrastricture/repository"
+	"cinema/pkg/cinema/infrastricture/transport"
+	"context"
 	"database/sql"
 	"fmt"
 	log "github.com/sirupsen/logrus"
@@ -10,17 +13,23 @@ import (
 	"syscall"
 )
 
-func main(){
+func main() {
 	log.SetFormatter(&log.JSONFormatter{})
 
 	killSignalChat := getKillSignalChan()
-	waitForKillSignal(killSignalChat)
 
 	config, err := parseEnv()
 	if err != nil {
 		log.Fatal(err)
 	}
+	var srv *http.Server
 	srv, err = startServer(config)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	waitForKillSignal(killSignalChat)
+	err = srv.Shutdown(context.Background())
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -54,9 +63,21 @@ func startServer(config *config) (*http.Server, error) {
 		log.Fatal(err)
 		return nil, err
 	}
-	router :=
+	movieRepo := repository.CreateMovieRepository(db)
+	ratingRepo := repository.CreateRatingRepository(db)
+	router := transport.Router(transport.NewServer(
+		movieRepo,
+		ratingRepo,
+	))
+	srv := &http.Server{
+		Addr:    serverUrl,
+		Handler: router,
+	}
+	go func() {
+		log.Fatal(srv.ListenAndServe())
+	}()
 
-	return nil, nil
+	return srv, nil
 }
 
 func createDBConn(config *config) (*sql.DB, error) {

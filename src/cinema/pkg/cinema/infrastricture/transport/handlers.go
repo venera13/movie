@@ -1,16 +1,23 @@
 package transport
 
 import (
+	"cinema/pkg/cinema/model"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"time"
-	"cinema/pkg/cinema/model"
 )
 
 type Server struct {
-	movieRepository model.MovieRepository
+	movieRepository  model.MovieRepository
 	ratingRepository model.RatingRepository
+}
+
+func NewServer(movieRepo model.MovieRepository, ratingRepo model.RatingRepository) *Server {
+	return &Server{
+		movieRepository:  movieRepo,
+		ratingRepository: ratingRepo,
+	}
 }
 
 func Router(s *Server) http.Handler {
