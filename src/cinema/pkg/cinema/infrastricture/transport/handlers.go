@@ -1,28 +1,52 @@
 package transport
 
 import (
+	service "cinema/pkg/cinema/application"
 	"cinema/pkg/cinema/model"
+	"encoding/json"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
+	"io/ioutil"
 	"net/http"
 	"time"
 )
 
 type Server struct {
-	movieRepository  model.MovieRepository
-	ratingRepository model.RatingRepository
+	movieService service.MovieService
 }
 
-func NewServer(movieRepo model.MovieRepository, ratingRepo model.RatingRepository) *Server {
+func NewServer(service service.MovieService) *Server {
 	return &Server{
-		movieRepository:  movieRepo,
-		ratingRepository: ratingRepo,
+		service,
 	}
 }
 
-func Router(s *Server) http.Handler {
+func Router(srv *Server) http.Handler {
 	r := mux.NewRouter()
+	s := r.PathPrefix("/api/v1").Subrouter()
+	s.HandleFunc("/movie", srv.addMovie).Methods(http.MethodPost)
 	return logMiddleware(r)
+}
+
+func (srv *Server) addMovie(w http.ResponseWriter, r *http.Request) {
+	requestData, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		processError(w, err)
+		return
+	}
+	defer r.Body.Close()
+	var addMovieInput model.AddMovieInput
+	err = json.Unmarshal(requestData, &addMovieInput)
+	if err != nil {
+		processError(w, err)
+		return
+	}
+
+	err = srv.movieService.AddMovie(&addMovieInput)
+	if err != nil {
+		processError(w, err)
+		return
+	}
 }
 
 func logMiddleware(h http.Handler) http.Handler {
@@ -37,4 +61,8 @@ func logMiddleware(h http.Handler) http.Handler {
 		}).Info("got a new request")
 		h.ServeHTTP(w, r)
 	})
+}
+
+func processError(w http.ResponseWriter, err error) {
+	http.Error(w, err.Error(), http.StatusInternalServerError)
 }

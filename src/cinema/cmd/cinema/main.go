@@ -1,11 +1,13 @@
 package main
 
 import (
+	service "cinema/pkg/cinema/application"
 	"cinema/pkg/cinema/infrastricture/repository"
 	"cinema/pkg/cinema/infrastricture/transport"
 	"context"
 	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os"
@@ -63,11 +65,9 @@ func startServer(config *config) (*http.Server, error) {
 		log.Fatal(err)
 		return nil, err
 	}
-	movieRepo := repository.CreateMovieRepository(db)
-	ratingRepo := repository.CreateRatingRepository(db)
+	movieService := service.NewMovieService(repository.CreateMovieRepository(db))
 	router := transport.Router(transport.NewServer(
-		movieRepo,
-		ratingRepo,
+		movieService,
 	))
 	srv := &http.Server{
 		Addr:    serverUrl,
