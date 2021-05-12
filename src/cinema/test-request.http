@@ -1,0 +1,19 @@
+
+
+#PUT http://localhost:8000/api/v1/movie/f060868a-c20d-47ee-909c-9fe58897109dff
+#Content-Type: application/json
+#
+#{
+#"name": "Аватар",
+#"description": "Тут новое описание1."
+#}
+
+DELETE http://localhost:8000/api/v1/movie/7e7e7a38-b4ac-4ceb-b110-bf55e80f31fbdfdfgfffff
+
+POST http://localhost:8000/api/v1/movie
+Content-Type: application/json
+
+{
+  "name": "Аватар",
+  "description": " В 2154 году полезные ископаемые планеты Земля практически исчерпаны. Человечество начало искать альтернативные источники энергии в далеких мирах Вселенной. Концерн Resources Development Administration (RDA) занимается добычей полезных ископаемых на планете Пандора."
+}

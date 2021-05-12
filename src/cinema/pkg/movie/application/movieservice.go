@@ -1,7 +1,7 @@
 package service
 
 import (
-	"cinema/pkg/cinema/model"
+	"cinema/pkg/movie/model"
 	"fmt"
 	"github.com/google/uuid"
 	"time"

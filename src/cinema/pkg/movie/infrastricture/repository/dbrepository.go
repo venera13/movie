@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"cinema/pkg/cinema/model"
+	"cinema/pkg/movie/model"
 	"database/sql"
 )
 

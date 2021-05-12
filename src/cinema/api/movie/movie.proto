@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotation.proto";
+
+package movie;
+
+option go_package = "./;movie";
+
+service MovieService {
+    rpc AddMovie (AddMovieRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/movie"
+            body: "*"
+        };
+    }
+}
+
+message AddMovieRequest {
+  string name = 1;
+  string description = 1;
+}

@@ -1,7 +1,7 @@
 package transport
 
 import (
-	"cinema/pkg/cinema/model"
+	"cinema/pkg/movie/model"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"io/ioutil"

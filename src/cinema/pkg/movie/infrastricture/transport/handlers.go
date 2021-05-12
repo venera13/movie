@@ -1,8 +1,8 @@
 package transport
 
 import (
-	service "cinema/pkg/cinema/application"
-	"cinema/pkg/cinema/model"
+	service "cinema/pkg/movie/application"
+	"cinema/pkg/movie/model"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"

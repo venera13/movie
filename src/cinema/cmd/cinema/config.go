@@ -2,7 +2,7 @@ package main
 
 import "github.com/kelseyhightower/envconfig"
 
-const appID = "cinema"
+const appID = "movie"
 
 type config struct {
 	ServeRESTAddress string `envconfig:"serve_rest_address" default:":8080"`
