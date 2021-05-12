@@ -28,7 +28,7 @@ func Router(srv *Server) http.Handler {
 	s.HandleFunc("/movie", srv.addMovie).Methods(http.MethodPost)
 	s.HandleFunc("/movie/{ID}", srv.getMovie).Methods(http.MethodGet)
 	s.HandleFunc("/movie/{ID}", srv.updateMovie).Methods(http.MethodPut)
-	s.HandleFunc("/movie/{ID}", srv.deleteMovie).Methods(http.MethodDelete)
+	s.HandleFunc("/movie/{ID}/delete", srv.deleteMovie).Methods(http.MethodPut)
 	return logMiddleware(r)
 }
 

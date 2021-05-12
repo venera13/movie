@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  orderservice:
+    container_name: cinema
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - cinema-db
+
+  cinema-db:
+    image: "mysql:8.0"
+    container_name: cinema-db
+    environment:
+      MYSQL_DATABASE: cinema
+      MYSQL_ROOT_PASSWORD: 12345678
+volumes:
+  db-data:
+

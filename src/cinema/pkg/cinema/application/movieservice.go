@@ -78,7 +78,8 @@ func (m *movieService) DeleteMovie(id string) error {
 	if movie == nil {
 		return fmt.Errorf("movie %s not found", id)
 	}
-	err = m.movieRepository.Delete(id)
+	movie.DeletedAt = time.Now().Unix()
+	err = m.movieRepository.Delete(*movie)
 	if err != nil {
 		return err
 	}
