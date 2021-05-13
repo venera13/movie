@@ -4,3 +4,4 @@
 *.json
 *.http
 !api-tests/*.json
+!api/*.json
