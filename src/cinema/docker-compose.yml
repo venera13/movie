@@ -8,6 +8,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      CINEMA_SERVE_REST_ADDRESS: ":8000"
+      CINEMA_MYSQL_DATABASE: "cinema"
+      CINEMA_MYSQL_USER: "root"
+      CINEMA_MYSQL_PASSWORD: "12345678"
     depends_on:
       - cinema-db
 
@@ -19,4 +24,3 @@ services:
       MYSQL_ROOT_PASSWORD: 12345678
 volumes:
   db-data:
-

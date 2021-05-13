@@ -1,7 +1,7 @@
 syntax = "proto3";
 
+import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "google/api/annotation.proto";
 
 package movie;
 
@@ -18,5 +18,5 @@ service MovieService {
 
 message AddMovieRequest {
   string name = 1;
-  string description = 1;
+  string description = 2;
 }
