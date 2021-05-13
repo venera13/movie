@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  orderservice:
+  cinema:
     container_name: cinema
     build:
       context: .
