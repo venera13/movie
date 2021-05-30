@@ -1,0 +1,1 @@
+Error 1054: Unknown column 'time' in 'field list'
