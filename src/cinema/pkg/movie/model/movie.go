@@ -21,7 +21,7 @@ type UpdateMovieInput struct {
 }
 
 type Movie struct {
-	Id          string
+	ID          string
 	CreatedAt   int64
 	UpdatedAt   int64
 	DeletedAt   int64

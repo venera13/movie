@@ -29,6 +29,7 @@ func Router(srv *Server) http.Handler {
 	s.HandleFunc("/movie/{ID}", srv.getMovie).Methods(http.MethodGet)
 	s.HandleFunc("/movie/{ID}", srv.updateMovie).Methods(http.MethodPut)
 	s.HandleFunc("/movie/{ID}/delete", srv.deleteMovie).Methods(http.MethodPut)
+
 	return logMiddleware(r)
 }
 
@@ -39,8 +40,10 @@ func (srv *Server) addMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+
 	var addMovieInput model.AddMovieInput
 	err = json.Unmarshal(requestData, &addMovieInput)
+
 	if err != nil {
 		processError(w, err)
 		return
@@ -65,6 +68,7 @@ func (srv *Server) getMovie(w http.ResponseWriter, r *http.Request) {
 		writeResponse(w, http.StatusNotFound, "Movie not found")
 		return
 	}
+
 	var b []byte
 	b, err = json.Marshal(movie)
 	writeResponse(w, http.StatusOK, string(b))
@@ -83,8 +87,10 @@ func (srv *Server) updateMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+
 	var updateMovieInput model.UpdateMovieInput
 	err = json.Unmarshal(requestData, &updateMovieInput)
+
 	if err != nil {
 		processError(w, err)
 		return
@@ -133,6 +139,7 @@ func writeResponse(w http.ResponseWriter, status int, response string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(status)
 	_, err := io.WriteString(w, response)
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

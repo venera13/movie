@@ -17,5 +17,6 @@ func parseEnv() (*config, error) {
 	if err := envconfig.Process(appID, c); err != nil {
 		return nil, err
 	}
+
 	return c, nil
 }
