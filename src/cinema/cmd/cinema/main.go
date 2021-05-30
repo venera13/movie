@@ -8,6 +8,9 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang-migrate/migrate"
+	"github.com/golang-migrate/migrate/database/mysql"
+	_ "github.com/golang-migrate/migrate/source/file"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os"
@@ -81,11 +84,37 @@ func startServer(config *config) (*http.Server, error) {
 }
 
 func createDBConn(config *config) (*sql.DB, error) {
-	dataSourceName := fmt.Sprintf("%s:%s@/%s", config.DBUser, config.DBPass, config.DBName)
+	dataSourceName := fmt.Sprintf("%s:%s@%s/%s?multiStatements=true", config.DBUser, config.DBPass, config.DBAddress, config.DBName)
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
 	}
+	err = migrations(db)
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
 	return db, nil
+}
+
+func migrations(db *sql.DB) error {
+	driver, err := mysql.WithInstance(db, &mysql.Config{})
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	var m *migrate.Migrate
+	m, err = migrate.NewWithDatabaseInstance(
+		"file://migrations",
+		"mysql",
+		driver,
+	)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	m.Up()
+
+	return nil
 }

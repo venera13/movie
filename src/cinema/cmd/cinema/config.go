@@ -9,6 +9,7 @@ type config struct {
 	DBName           string `envconfig:"mysql_database"`
 	DBUser           string `envconfig:"mysql_user"`
 	DBPass           string `envconfig:"mysql_password"`
+	DBAddress        string `envconfig:"mysql_address"`
 }
 
 func parseEnv() (*config, error) {
