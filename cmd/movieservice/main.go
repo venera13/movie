@@ -11,6 +11,7 @@ import (
 	"github.com/golang-migrate/migrate"
 	"github.com/golang-migrate/migrate/database/mysql"
 	_ "github.com/golang-migrate/migrate/source/file"
+	"github.com/sanketplus/go-mysql-lock"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os"
@@ -114,6 +115,13 @@ func createDBConn(config *config) (*sql.DB, error) {
 		return nil, err
 	}
 
+	err = applyLocker(db)
+	if err != nil {
+		log.Fatal(err)
+
+		return nil, err
+	}
+
 	return db, nil
 }
 
@@ -139,6 +147,28 @@ func migrations(db *sql.DB) error {
 	}
 
 	err = m.Up()
+
+	if err != nil {
+		log.Fatal(err)
+
+		return err
+	}
+
+	return nil
+}
+
+func applyLocker(db *sql.DB) error {
+	locker := gomysqllock.NewMysqlLocker(db)
+
+	lock, err := locker.Obtain("foo")
+
+	if err != nil {
+		log.Fatal(err)
+
+		return err
+	}
+
+	err = lock.Release()
 
 	if err != nil {
 		log.Fatal(err)
