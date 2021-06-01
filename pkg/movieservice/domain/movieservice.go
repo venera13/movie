@@ -7,9 +7,6 @@ type MovieRepository interface {
 	Delete(movieData Movie) error
 }
 
-type RatingRepository interface {
-}
-
 type Movie struct {
 	ID          string
 	CreatedAt   int64

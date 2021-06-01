@@ -2,8 +2,8 @@ package main
 
 import (
 	service "cinema/pkg/movieservice/application"
-	"cinema/pkg/movieservice/infrastricture/repository"
-	"cinema/pkg/movieservice/infrastricture/transport"
+	"cinema/pkg/movieservice/infrastructure/repository"
+	"cinema/pkg/movieservice/infrastructure/transport"
 	"context"
 	"database/sql"
 	"fmt"
