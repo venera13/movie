@@ -27,10 +27,10 @@ func NewServer(service service.MovieService) *Server {
 func Router(srv *Server) http.Handler {
 	r := mux.NewRouter()
 	s := r.PathPrefix("/api/v1").Subrouter()
-	s.HandleFunc("/movieservice", srv.addMovie).Methods(http.MethodPost)
-	s.HandleFunc("/movieservice/{ID}", srv.getMovie).Methods(http.MethodGet)
-	s.HandleFunc("/movieservice/{ID}", srv.updateMovie).Methods(http.MethodPut)
-	s.HandleFunc("/movieservice/{ID}/delete", srv.deleteMovie).Methods(http.MethodPut)
+	s.HandleFunc("/movie", srv.addMovie).Methods(http.MethodPost)
+	s.HandleFunc("/movie/{ID}", srv.getMovie).Methods(http.MethodGet)
+	s.HandleFunc("/movie/{ID}", srv.updateMovie).Methods(http.MethodPut)
+	s.HandleFunc("/movie/{ID}/delete", srv.deleteMovie).Methods(http.MethodPut)
 
 	return logMiddleware(r)
 }
@@ -64,7 +64,7 @@ func (srv *Server) addMovie(w http.ResponseWriter, r *http.Request) {
 func (srv *Server) getMovie(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	if vars["ID"] == "" {
-		http.Error(w, "id of the movieservice is required", http.StatusBadRequest)
+		http.Error(w, "id of the movie is required", http.StatusBadRequest)
 
 		return
 	}
@@ -91,7 +91,7 @@ func (srv *Server) getMovie(w http.ResponseWriter, r *http.Request) {
 func (srv *Server) updateMovie(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	if vars["ID"] == "" {
-		http.Error(w, "id of the movieservice is required", http.StatusBadRequest)
+		http.Error(w, "id of the movie is required", http.StatusBadRequest)
 
 		return
 	}
@@ -124,7 +124,7 @@ func (srv *Server) updateMovie(w http.ResponseWriter, r *http.Request) {
 func (srv *Server) deleteMovie(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	if vars["ID"] == "" {
-		http.Error(w, "id of the movieservice is required", http.StatusBadRequest)
+		http.Error(w, "id of the movie is required", http.StatusBadRequest)
 
 		return
 	}
