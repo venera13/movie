@@ -1,8 +1,8 @@
 version: '3.3'
 
 services:
-  movieservice:
-    container_name: movieservice
+  cinema:
+    container_name: cinema
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,20 +10,20 @@ services:
       - "8000:8000"
     environment:
       MOVIESERVICE_SERVE_REST_ADDRESS: ":8000"
-      MOVIESERVICE_MYSQL_DATABASE: "movie"
+      MOVIESERVICE_MYSQL_DATABASE: "cinema"
       MOVIESERVICE_MYSQL_USER: "root"
       MOVIESERVICE_MYSQL_PASSWORD: "12345678"
-      MOVIESERVICE_MYSQL_ADDRESS: "tcp(movieservice-db:3306)"
+      MOVIESERVICE_MYSQL_ADDRESS: "tcp(cinema-db:3306)"
     depends_on:
-      movieservice-db:
+      cinema-db:
         condition: service_healthy
 
-  movieservice-db:
+  cinema-db:
     image: "mysql:8.0"
-    container_name: movieservice-db
+    container_name: cinema-db
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: "movie"
+      MYSQL_DATABASE: "cinema"
       MYSQL_ROOT_PASSWORD: "12345678"
     healthcheck:
       test: mysql -uroot -p12345678 -e 'SELECT 1'
