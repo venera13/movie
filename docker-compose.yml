@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  cinema:
+  movieservice:
     container_name: movieservice
     build:
       context: .
@@ -9,21 +9,21 @@ services:
     ports:
       - "8000:8000"
     environment:
-      CINEMA_SERVE_REST_ADDRESS: ":8000"
-      CINEMA_MYSQL_DATABASE: "movieservice"
-      CINEMA_MYSQL_USER: "root"
-      CINEMA_MYSQL_PASSWORD: "12345678"
-      CINEMA_MYSQL_ADDRESS: "tcp(movieservice-db:3306)"
+      MOVIESERVICE_SERVE_REST_ADDRESS: ":8000"
+      MOVIESERVICE_MYSQL_DATABASE: "movie"
+      MOVIESERVICE_MYSQL_USER: "root"
+      MOVIESERVICE_MYSQL_PASSWORD: "12345678"
+      MOVIESERVICE_MYSQL_ADDRESS: "tcp(movieservice-db:3306)"
     depends_on:
-      cinema-db:
+      movieservice-db:
         condition: service_healthy
 
-  cinema-db:
+  movieservice-db:
     image: "mysql:8.0"
     container_name: movieservice-db
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: "movieservice"
+      MYSQL_DATABASE: "movie"
       MYSQL_ROOT_PASSWORD: "12345678"
     healthcheck:
       test: mysql -uroot -p12345678 -e 'SELECT 1'

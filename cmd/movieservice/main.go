@@ -108,12 +108,12 @@ func createDBConn(config *config) (*sql.DB, error) {
 		return nil, err
 	}
 
-	err = migrations(db)
-	if err != nil {
-		log.Fatal(err)
-
-		return nil, err
-	}
+	//err = migrations(db)
+	//if err != nil {
+	//	log.Fatal(err)
+	//
+	//	return nil, err
+	//}
 
 	err = applyLocker(db)
 	if err != nil {
