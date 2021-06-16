@@ -11,3 +11,5 @@ test:
 
 check:
 	golangci-lint run
+
+newman run /app/bin/Movieservice.postman_collection.json --global-var "localhost=http://localhost:8000"
