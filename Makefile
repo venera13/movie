@@ -4,7 +4,7 @@ modules:
 	go mod tidy
 
 build: modules
-	go build cmd/cinema/*
+	go build cmd/movieservice/*
 
 test:
 	go test ./...
