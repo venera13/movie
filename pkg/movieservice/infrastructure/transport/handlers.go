@@ -1,15 +1,15 @@
 package transport
 
 import (
-	service "cinema/pkg/movieservice/application"
-	"cinema/pkg/movieservice/application/data"
-	"cinema/pkg/movieservice/application/errors"
 	"encoding/json"
 	"errors"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
+	service "movie/pkg/movieservice/application"
+	"movie/pkg/movieservice/application/data"
+	"movie/pkg/movieservice/application/errors"
 	"net/http"
 	"time"
 )

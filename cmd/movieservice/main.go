@@ -1,9 +1,6 @@
 package main
 
 import (
-	service "cinema/pkg/movieservice/application"
-	"cinema/pkg/movieservice/infrastructure/repository"
-	"cinema/pkg/movieservice/infrastructure/transport"
 	"context"
 	"database/sql"
 	"fmt"
@@ -13,6 +10,9 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 	"github.com/sanketplus/go-mysql-lock"
 	log "github.com/sirupsen/logrus"
+	service "movie/pkg/movieservice/application"
+	"movie/pkg/movieservice/infrastructure/repository"
+	"movie/pkg/movieservice/infrastructure/transport"
 	"net/http"
 	"os"
 	"os/signal"

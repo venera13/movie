@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"cinema/pkg/movieservice/domain"
 	"database/sql"
 	"errors"
+	"movie/pkg/movieservice/domain"
 )
 
 func CreateMovieRepository(db *sql.DB) domain.MovieRepository {

@@ -1,11 +1,12 @@
 package service
 
 import (
-	"cinema/pkg/movieservice/application/data"
-	"cinema/pkg/movieservice/application/errors"
-	"cinema/pkg/movieservice/domain"
 	"errors"
 	"github.com/google/uuid"
+	"movie/pkg/movieservice/application/data"
+	"movie/pkg/movieservice/application/errors"
+	serviceerrors "movie/pkg/movieservice/application/errors"
+	"movie/pkg/movieservice/domain"
 	"time"
 )
 
