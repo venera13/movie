@@ -12,4 +12,5 @@ test:
 check:
 	golangci-lint run
 
-newman run /app/bin/Movieservice.postman_collection.json --global-var "localhost=http://localhost:8000"
+api_tests: up
+	docker run --rm -v $(shell pwd)/api-tests:/app --network host postman/newman run --global-var url=localhost:8000 /app/Movieservice.postman_collection.json
