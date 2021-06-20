@@ -5,7 +5,6 @@ import (
 	"github.com/google/uuid"
 	"movie/pkg/movieservice/application/data"
 	"movie/pkg/movieservice/application/errors"
-	serviceerrors "movie/pkg/movieservice/application/errors"
 	"movie/pkg/movieservice/domain"
 	"time"
 )
