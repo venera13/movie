@@ -1,11 +1,11 @@
 package data
 
 type AddMovieInput struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name        string
+	Description string
 }
 
 type UpdateMovieInput struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name        string
+	Description string
 }

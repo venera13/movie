@@ -1,17 +1,29 @@
 run:
+  deadline: 5m
   issues-exit-code: 1
 
 linters:
   enable-all: true
   disable:
-    - maligned
-    - prealloc
-    - lll
     - gochecknoglobals
+    - lll
     - unparam
     - goconst
-    - exhaustivestruct
+    - tagliatelle
     - wrapcheck
+    - exhaustivestruct
+    - gosec
+    - noctx
+    - gofumpt
+    - gci
+    - goimports
 linters-settings:
-  govert:
+  govet:
     check-shadowing: true
+  goimports:
+    local-prefixes: compiler
+  gocritic:
+    enabled-tags:
+      - experimental
+    disabled-tags:
+      - opinionated

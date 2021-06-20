@@ -154,6 +154,8 @@ func logMiddleware(h http.Handler) http.Handler {
 func processError(w http.ResponseWriter, err error) {
 	if errors.Is(err, serviceerrors.NotFoundMovieError) {
 		http.Error(w, err.Error(), http.StatusNotFound)
+	} else if errors.Is(err, serviceerrors.RequiredNameError) {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	} else {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
