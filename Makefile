@@ -1,5 +1,11 @@
 all: build test check
 
+up:
+	docker-compose -f docker-compose.yml up -d
+
+down:
+	docker-compose -f docker-compose.yml down
+
 modules:
 	go mod tidy
 
