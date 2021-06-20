@@ -1,9 +1,11 @@
 package transport
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"github.com/gorilla/mux"
+	gomysqllock "github.com/sanketplus/go-mysql-lock"
 	log "github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
@@ -33,6 +35,28 @@ func Router(srv *Server) http.Handler {
 	s.HandleFunc("/movie/{ID}/delete", srv.deleteMovie).Methods(http.MethodPut)
 
 	return logMiddleware(r)
+}
+
+func ApplyLocker(db *sql.DB) error {
+	locker := gomysqllock.NewMysqlLocker(db)
+
+	lock, err := locker.Obtain("foo")
+
+	if err != nil {
+		log.Fatal(err)
+
+		return err
+	}
+
+	err = lock.Release()
+
+	if err != nil {
+		log.Fatal(err)
+
+		return err
+	}
+
+	return nil
 }
 
 func (srv *Server) addMovie(w http.ResponseWriter, r *http.Request) {
