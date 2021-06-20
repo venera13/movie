@@ -27,8 +27,8 @@ func NewMovieService(movieRepo domain.MovieRepository) MovieService {
 }
 
 func (m *movieService) AddMovie(request *data.AddMovieInput) error {
-	if len(request.Name) == 0 {
-		return serviceerrors.RequiredNameError
+	if request.Name == "" {
+		return serviceerrors.ErrorRequiredName
 	}
 
 	movieID := uuid.NewString()
@@ -49,7 +49,7 @@ func (m *movieService) GetMovie(id string) (*domain.Movie, error) {
 	movie, err := m.movieRepository.Get(id)
 
 	if errors.Is(err, domain.ErrorMovieNotFound) {
-		return nil, serviceerrors.NotFoundMovieError
+		return nil, serviceerrors.ErrorNotFoundMovie
 	}
 
 	if err != nil {
@@ -62,7 +62,7 @@ func (m *movieService) GetMovie(id string) (*domain.Movie, error) {
 func (m *movieService) UpdateMovie(id string, request *data.UpdateMovieInput) error {
 	movie, err := m.movieRepository.Get(id)
 	if movie == nil {
-		return serviceerrors.NotFoundMovieError
+		return serviceerrors.ErrorNotFoundMovie
 	}
 
 	if err != nil {
@@ -90,7 +90,7 @@ func (m *movieService) UpdateMovie(id string, request *data.UpdateMovieInput) er
 func (m *movieService) DeleteMovie(id string) error {
 	movie, err := m.movieRepository.Get(id)
 	if movie == nil {
-		return serviceerrors.NotFoundMovieError
+		return serviceerrors.ErrorNotFoundMovie
 	}
 
 	if err != nil {
