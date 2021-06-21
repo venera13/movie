@@ -68,13 +68,18 @@ func (srv *Server) addMovie(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	var addMovieInput data.AddMovieInput
-	err = json.Unmarshal(requestData, &addMovieInput)
+	var addMovieData addMovieData
+	err = json.Unmarshal(requestData, &addMovieData)
 
 	if err != nil {
 		processError(w, err)
 
 		return
+	}
+
+	addMovieInput := data.AddMovieInput{
+		Name:        addMovieData.Name,
+		Description: addMovieData.Description,
 	}
 
 	err = srv.movieService.AddMovie(&addMovieInput)
