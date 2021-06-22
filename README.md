@@ -1,19 +1,19 @@
-#Movie service
+# Movie service #
 
-##Диаграмма use case
+## Диаграмма use case ##
 ![Use cases](docs/usecase_diagram.jpg)
 
-##Диаграмма компонентов
+## Диаграмма компонентов ##
 ![Component diagram](docs/component_diagram.jpg)
 
-##Диаграмма последовательностей процесса оценки фильма
+## Диаграмма последовательностей процесса оценки фильма ##
 ![Component diagram](docs/sequence_diagram_3.jpg)
 
-###Команда сборки
+### Команда сборки ###
 ```make build```
 
-###Команда запуска
+### Команда запуска ###
 ```make up```
 
-###Запуск api тестов
+### Запуск api тестов ###
 ```make api_tests```
